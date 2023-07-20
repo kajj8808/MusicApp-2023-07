@@ -1,0 +1,15 @@
+{
+  "include": ["src"],
+  "compilerOptions": {
+    "outDir": "build",
+    "target": "ES6",
+    "lib": ["ES6"],
+    "strict": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "paths": {
+      "@spotipy/*": ["node_modules/@spotify/web-api-ts-sdk/*"]
+    }
+  }
+}
