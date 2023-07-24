@@ -2,8 +2,10 @@
 
 - Music App With Spotipy WebSDK
 
-## API
+## API ( GraphQL )
 
+- [] AuthSpotipy
+- [] IsLogin
 - [] Search ( artist , album , track )
 - [] AlbumDetail
 - [] ArtistDetail

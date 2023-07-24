@@ -1,12 +1,19 @@
 "use client";
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-function SpotipyAuth() {
+interface IProps {
+  redirectUri?: string;
+}
+
+function SpotifyAuth({ redirectUri }: IProps) {
+  const router = useRouter();
   const onclick = () => {
     /* scopes  https://developer.spotify.com/documentation/web-api/concepts/scopes#user-soa-link */
     SpotifyApi.performUserAuthorization(
       process.env.SPOTIFY_CLIENT_ID ?? "",
-      "http://localhost:3000",
+      redirectUri ?? "http://localhost:3000",
       [
         "user-read-playback-state" /* 현재 재생에 대한 정보 가져오는 용도 */,
         "user-modify-playback-state" /* 재생 상태 ( 시작/정지 건너뛰기 ) */,
@@ -23,14 +30,21 @@ function SpotipyAuth() {
         "user-read-email",
         "user-read-private",
       ],
-      "http://localhost:3001/accept-user-token"
+      "http://localhost:3001/accept-user-token",
     );
+    router.push(redirectUri ?? "http://localhost:3000");
   };
+
   return (
-    <div>
-      <button onClick={onclick}>Spotipy Login</button>
+    <div className="flex h-screen w-full items-center justify-center">
+      <button
+        onClick={onclick}
+        className="rounded-2xl bg-[#f2f6fc] px-5 py-3 text-lg font-bold"
+      >
+        Spotify Auth
+      </button>
     </div>
   );
 }
 
-export default SpotipyAuth;
+export default SpotifyAuth;

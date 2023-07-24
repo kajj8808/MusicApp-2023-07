@@ -31,11 +31,55 @@ app.post("/accept-user-token", async (req, res) => {
     process.env.SPOTIFY_CLIENT_ID ?? "",
     data
   );
+  const token = await spotipyApi.authenticate();
+  console.log(token);
 });
 
-app.get("/api/test", async (_, res) => {
-  const result = await spotipyApi.currentUser.topItems("tracks");
-  res.json(result);
+app.get("/api/top_items", async (_, res) => {
+  try {
+    const result = await spotipyApi.currentUser.topItems("artists");
+    res.json(result);
+  } catch (error) {
+    res.status(502).send("Error");
+  }
+});
+app.get("/api/playlist", async (_, res) => {
+  try {
+    const result = await spotipyApi.currentUser.playlists.playlists(2);
+    res.json(result);
+  } catch (error) {
+    res.status(502).send("Error");
+  }
+});
+
+app.get("/api/artist_albums", async (_, res) => {
+  try {
+    const result = await spotipyApi.artists.albums("726WiFmWkohzodUxK3XjHX");
+    res.json(result);
+  } catch (error) {
+    res.status(502).send("Error");
+  }
+});
+
+app.get("/api/artist_top_albums", async (_, res) => {
+  try {
+    const result = await spotipyApi.artists.topTracks(
+      "726WiFmWkohzodUxK3XjHX",
+      "JP"
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(502).send("Error");
+  }
+});
+
+app.get("/api/albums_detail", async (_, res) => {
+  try {
+    const result = await spotipyApi.albums.tracks("2HmlBFz06FldsdzwY1FHg4");
+    res.json(result);
+  } catch (error) {
+    res.status(502).send("Error");
+  }
 });
 
 app.get("/*", (_, res) => {
